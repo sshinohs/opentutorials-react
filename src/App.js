@@ -42,8 +42,8 @@ function Create(props) {
         }
         }>
             <p><input type="text" name="title" placeholder="title"/></p>
-            <p><textarea name="body" placeholder="body"></textarea></p>
-            <p><input type="submit" value="Create"></input></p>
+            <p><textarea name="body" placeholder="body"/></p>
+            <p><input type="submit" value="Create"/></p>
         </form>
     </article>
 }
@@ -64,11 +64,11 @@ function Update(props) {
                 console.log(event.target.value);
             }
             }/></p>
-            <p><textarea name="body" placeholder="body" value={body} onChange={event=> {
-                setBody(event.target.value);
-            }
-            }></textarea></p>
-            <p><input type="submit" value="Update"></input></p>
+            <p><textarea name="body" placeholder="body" value={body} onChange={event => {
+    setBody(event.target.value);
+}
+}/></p>
+            <p><input type="submit" value="Update"/></p>
         </form>
     </article>
 }
@@ -84,7 +84,7 @@ function App() {
     let content = null;
     let contextControl = null;
     if(mode === 'WELCOME') {
-        content = <Article title="Welcome" body="Hello, WEB"></Article>
+        content = <Article title="Welcome" body="Hello, WEB"/>
     } else if(mode === 'READ') {
         let title, body = null;
         for(let i=0; i<topics.length; i++) {
@@ -93,36 +93,36 @@ function App() {
                 body = topics[i].body;
             }
         }
-        content = <Article title={title} body={body}></Article>
+        content = <Article title={title} body={body}/>
         contextControl =<>
             <li><a href={'/update/'+id} onClick={event=> {
             event.preventDefault();
             setMode('UPDATE');
         }
         }>Update</a></li>
-            <li><input type="button" value="Delete" onClick={()=> {
-                const newTopics = []
-                for(let i=0; i<topics.length; i++) {
-                    if(topics[i].id !== id){
-                        newTopics.push(topics[i]);
-                    }
-                    setTopics(newTopics);
-                    setMode('WELCOME');
-                }
-            }
-            }></input></li>
+            <li><input type="button" value="Delete" onClick={() => {
+    const newTopics = []
+    for (let i = 0; i < topics.length; i++) {
+        if (topics[i].id !== id) {
+            newTopics.push(topics[i]);
+        }
+        setTopics(newTopics);
+        setMode('WELCOME');
+    }
+}
+}/></li>
             </>
     } else if(mode === 'CREATE') {
         content = <Create onCreate={(_title, _body) => {
-            const newTopic = {id:nextId, title:_title, body:_body}
-            const newTopics = [...topics];
-            newTopics.push(newTopic);
-            setTopics(newTopics);
-            setMode('READ');
-            setId(nextId);
-            setNextId(nextId+1);
-        }
-        }></Create>
+    const newTopic = {id: nextId, title: _title, body: _body}
+    const newTopics = [...topics];
+    newTopics.push(newTopic);
+    setTopics(newTopics);
+    setMode('READ');
+    setId(nextId);
+    setNextId(nextId + 1);
+}
+}/>
     } else if(mode === 'UPDATE') {
         let title, body = null;
         for(let i=0; i<topics.length; i++) {
@@ -132,29 +132,29 @@ function App() {
             }
         }
         content = <Update title={title} body={body} onUpdate={(title, body) => {
-            console.log(title, body)
-            const newTopics = [...topics]
-            const updateTopic = {id:id, title:title, body:body}
-            for(let i=0; i<newTopics.length; i++) {
-                if(newTopics[i].id === id) {
-                    newTopics[i] = updateTopic;
-                    break;
-                }
-            }
-            setTopics(newTopics);
-            setMode('READ');
+    console.log(title, body)
+    const newTopics = [...topics]
+    const updateTopic = {id: id, title: title, body: body}
+    for (let i = 0; i < newTopics.length; i++) {
+        if (newTopics[i].id === id) {
+            newTopics[i] = updateTopic;
+            break;
         }
-        }></Update>
+    }
+    setTopics(newTopics);
+    setMode('READ');
+}
+}/>
     }
   return (
       <div>
           <Header title="WEB" onChangeMode={() => {
-              setMode('WELCOME');
-          }}></Header>
-          <Nav topics={topics} onChangeMode={(_id)=>{
-              setMode('READ');
-              setId(_id);
-          }}></Nav>
+    setMode('WELCOME');
+}}/>
+          <Nav topics={topics} onChangeMode={(_id) => {
+    setMode('READ');
+    setId(_id);
+}}/>
           {content}
           <ul>
               <li><a href="/create" onClick={event=>{
